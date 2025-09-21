@@ -1,3 +1,5 @@
+![Database ERD](tabels.png)
+
 # e_comerce_analysis – Database & SQL Analytics
 
 ## Overview
