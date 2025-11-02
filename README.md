@@ -1,289 +1,575 @@
-![Database ERD](tabels.png)
+# 🛒 E-Commerce Sales Analysis![Database ERD](tabels.png)
 
-# e_comerce_analysis – Database & SQL Analytics
 
-## Overview
 
-This project demonstrates the process of **cleaning, normalizing, and analyzing e-commerce sales data** using SQL. It starts from a raw table (`e_comerce`), transforms and splits columns, normalizes the schema into analytical tables (`customers`, `products`, `orders`), and finally provides a set of advanced SQL queries to extract business insights.
+![Database ERD](docs/database_schema.png)# e_comerce_analysis – Database & SQL Analytics
 
----
 
-## Table of Contents
 
-- [Schema Design & Normalization](#schema-design--normalization)
-  - [Original Table Creation](#original-table-creation)
-  - [Cleaning & Transformation](#cleaning--transformation)
-  - [Entity Identification & Normalization](#entity-identification--normalization)
-  - [Data Insertion](#data-insertion)
-  - [Foreign Key Constraints](#foreign-key-constraints)
-- [SQL Analytics](#sql-analytics)
-  - [High-Level Business Metrics](#high-level-business-metrics)
-  - [Customer Behavior Analysis](#customer-behavior-analysis)
+A comprehensive SQL-based e-commerce analytics project demonstrating **database design, data normalization, and business intelligence** using real-world transaction data.## Overview
+
+
+
+---This project demonstrates the process of **cleaning, normalizing, and analyzing e-commerce sales data** using SQL. It starts from a raw table (`e_comerce`), transforms and splits columns, normalizes the schema into analytical tables (`customers`, `products`, `orders`), and finally provides a set of advanced SQL queries to extract business insights.
+
+
+
+## 📋 Table of Contents---
+
+
+
+- [Overview](#overview)## Table of Contents
+
+- [Key Features](#key-features)
+
+- [Database Schema](#database-schema)- [Schema Design & Normalization](#schema-design--normalization)
+
+- [Project Structure](#project-structure)  - [Original Table Creation](#original-table-creation)
+
+- [SQL Queries](#sql-queries)  - [Cleaning & Transformation](#cleaning--transformation)
+
+- [Business Insights](#business-insights)  - [Entity Identification & Normalization](#entity-identification--normalization)
+
+- [Technologies Used](#technologies-used)  - [Data Insertion](#data-insertion)
+
+- [Getting Started](#getting-started)  - [Foreign Key Constraints](#foreign-key-constraints)
+
+- [Key Learnings](#key-learnings)- [SQL Analytics](#sql-analytics)
+
+- [Author](#author)  - [High-Level Business Metrics](#high-level-business-metrics)
+
+- [License](#license)  - [Customer Behavior Analysis](#customer-behavior-analysis)
+
   - [Revenue & Product Analysis](#revenue--product-analysis)
-  - [Churn & Cohort Analysis](#churn--cohort-analysis)
+
+---  - [Churn & Cohort Analysis](#churn--cohort-analysis)
+
   - [Advanced SQL Techniques](#advanced-sql-techniques)
-- [Usage](#usage)
+
+## 🎯 Overview- [Usage](#usage)
+
 - [Notes](#notes)
 
+This project demonstrates the complete lifecycle of an e-commerce data analytics pipeline:
+
 ---
 
-## Schema Design & Normalization
+1. **Data Cleaning**: Transforming raw transaction data
+
+2. **Database Normalization**: Designing a 3NF relational schema## Schema Design & Normalization
+
+3. **Business Intelligence**: Extracting actionable insights with SQL
 
 ### Original Table Creation
 
-```sql
-CREATE TABLE e_comerce (
-    InvoiceNo   VARCHAR(25),
-    StockCode   VARCHAR(25), -- fk
+**Perfect for showcasing:**
+
+- Database design & normalization skills```sql
+
+- Advanced SQL techniques (CTEs, window functions, joins)CREATE TABLE e_comerce (
+
+- Business analysis & metrics calculation    InvoiceNo   VARCHAR(25),
+
+- Data-driven decision making    StockCode   VARCHAR(25), -- fk
+
     Description VARCHAR(65),
-    Quantity    DECIMAL(10,2),
+
+---    Quantity    DECIMAL(10,2),
+
     InvoiceDate TIMESTAMP,
-    UnitPrice   DECIMAL(10,2),
+
+## ⭐ Key Features    UnitPrice   DECIMAL(10,2),
+
     CustomerID  VARCHAR(25), -- fk
-    Country     VARCHAR(25)
-);
 
-ALTER TABLE e_comerce ADD COLUMN id SERIAL PRIMARY KEY;
+### Database Design    Country     VARCHAR(25)
+
+- ✅ **Normalized Schema**: Separated into customers, products, and orders tables);
+
+- ✅ **Data Integrity**: Foreign key constraints ensure referential integrity
+
+- ✅ **Clean Architecture**: Follows 3NF (Third Normal Form) principlesALTER TABLE e_comerce ADD COLUMN id SERIAL PRIMARY KEY;
+
 ```
 
-### Cleaning & Transformation
+### SQL Analysis
 
-- **Splitting Date and Time:**
+- 📊 **12 Business Intelligence Queries** with CTEs### Cleaning & Transformation
 
-```sql
+- 📈 **Customer Segmentation**: VIP, Regular, and Occasional customers
+
+- 💰 **Revenue Analytics**: Trends, top products, best customers- **Splitting Date and Time:**
+
+- 🔄 **Cohort Analysis**: Customer retention and churn patterns
+
+- 📉 **Growth Metrics**: Month-over-month revenue tracking```sql
+
 ALTER TABLE e_comerce ADD COLUMN date_only DATE, ADD COLUMN time_only TIME;
-UPDATE e_comerce
-SET date_only = CAST(InvoiceDate AS DATE),
-    time_only = CAST(InvoiceDate AS TIME);
-ALTER TABLE e_comerce DROP COLUMN InvoiceDate;
-```
 
-- **Renaming Columns for Clarity:**
+### Code QualityUPDATE e_comerce
 
-```sql
+- 🎯 **Beginner-Friendly**: Every query answers a clear business questionSET date_only = CAST(InvoiceDate AS DATE),
+
+- 💡 **Interview-Ready**: Includes tips for explaining queries    time_only = CAST(InvoiceDate AS TIME);
+
+- 📝 **Well-Documented**: Comments explain the "why" behind each queryALTER TABLE e_comerce DROP COLUMN InvoiceDate;
+
+- 🧹 **Clean Code**: Uses CTEs for readability```
+
+
+
+---- **Renaming Columns for Clarity:**
+
+
+
+## 🗄️ Database Schema```sql
+
 ALTER TABLE e_comerce RENAME COLUMN InvoiceNo TO invoice;
-ALTER TABLE e_comerce RENAME COLUMN StockCode TO product_code;
-ALTER TABLE e_comerce RENAME COLUMN date_only TO date;
-ALTER TABLE e_comerce RENAME COLUMN time_only TO time;
+
+### Original Raw TableALTER TABLE e_comerce RENAME COLUMN StockCode TO product_code;
+
+```sqlALTER TABLE e_comerce RENAME COLUMN date_only TO date;
+
+e_comerce (ALTER TABLE e_comerce RENAME COLUMN time_only TO time;
+
+    id SERIAL PRIMARY KEY,```
+
+    invoice VARCHAR(25),
+
+    product_code VARCHAR(25),### Entity Identification & Normalization
+
+    description VARCHAR(65),
+
+    quantity DECIMAL(10,2),- **Customers**
+
+    date DATE,
+
+    time TIME,```sql
+
+    unitprice DECIMAL(10,2),CREATE TABLE customers(
+
+    customerid VARCHAR(25),    CustomerID  VARCHAR(25) PRIMARY KEY,
+
+    country VARCHAR(25)    Country     VARCHAR(25),
+
+)    date        DATE
+
+```);
+
 ```
 
-### Entity Identification & Normalization
-
-- **Customers**
-
-```sql
-CREATE TABLE customers(
-    CustomerID  VARCHAR(25) PRIMARY KEY,
-    Country     VARCHAR(25),
-    date        DATE
-);
-```
+### Normalized Tables
 
 - **Products**
 
-```sql
-CREATE TABLE products(
-    product_code VARCHAR(25) PRIMARY KEY,
-    Description  VARCHAR(65),
-    UnitPrice    DECIMAL(10,2)
-);
-```
+**Customers Table**
 
-- **Orders**
+```sql```sql
+
+customers (CREATE TABLE products(
+
+    CustomerID VARCHAR(25) PRIMARY KEY,    product_code VARCHAR(25) PRIMARY KEY,
+
+    Country VARCHAR(25),    Description  VARCHAR(65),
+
+    date DATE    UnitPrice    DECIMAL(10,2)
+
+));
+
+``````
+
+
+
+**Products Table**- **Orders**
 
 ```sql
-CREATE TABLE orders(
-    InvoiceNo    VARCHAR(25) PRIMARY KEY,
-    date         DATE,
-    CustomerID   VARCHAR(25), -- fk
-    product_code VARCHAR(25), -- fk
+
+products (```sql
+
+    product_code VARCHAR(25) PRIMARY KEY,CREATE TABLE orders(
+
+    Description VARCHAR(65),    InvoiceNo    VARCHAR(25) PRIMARY KEY,
+
+    UnitPrice DECIMAL(10,2)    date         DATE,
+
+)    CustomerID   VARCHAR(25), -- fk
+
+```    product_code VARCHAR(25), -- fk
+
     Quantity     DECIMAL(10,2),
-    UnitPrice    DECIMAL(10,2)
-);
-```
 
-### Data Insertion
+**Orders Table**    UnitPrice    DECIMAL(10,2)
 
-- **Customers**
+```sql);
 
-```sql
-INSERT INTO customers (CustomerID, Country, date)
-SELECT DISTINCT ON (CustomerID) CustomerID, Country, date
+orders (```
+
+    InvoiceNo VARCHAR(25) PRIMARY KEY,
+
+    date DATE,### Data Insertion
+
+    CustomerID VARCHAR(25) REFERENCES customers(CustomerID),
+
+    product_code VARCHAR(25) REFERENCES products(product_code),- **Customers**
+
+    Quantity DECIMAL(10,2),
+
+    UnitPrice DECIMAL(10,2)```sql
+
+)INSERT INTO customers (CustomerID, Country, date)
+
+```SELECT DISTINCT ON (CustomerID) CustomerID, Country, date
+
 FROM e_comerce
-WHERE CustomerID IS NOT NULL
+
+---WHERE CustomerID IS NOT NULL
+
 ON CONFLICT (CustomerID) DO NOTHING;
-```
 
-- **Products**
+## 📁 Project Structure```
 
-```sql
-INSERT INTO products (product_code, Description, UnitPrice)
-SELECT DISTINCT ON (product_code) product_code, Description, UnitPrice
-FROM e_comerce
-ON CONFLICT (product_code) DO NOTHING;
-```
 
-- **Orders**
 
-```sql
-INSERT INTO orders (InvoiceNo, date, CustomerID, product_code, Quantity, UnitPrice)
-SELECT invoice, date, CustomerID, product_code, Quantity, UnitPrice
-FROM e_comerce
-ON CONFLICT (InvoiceNo) DO NOTHING;
+```- **Products**
+
+e-commerce-analysis/
+
+│```sql
+
+├── sql/INSERT INTO products (product_code, Description, UnitPrice)
+
+│   ├── 01_schema_setup.sql          # Database creation & normalizationSELECT DISTINCT ON (product_code) product_code, Description, UnitPrice
+
+│   └── 02_business_analysis.sql     # 12 business intelligence queriesFROM e_comerce
+
+│ON CONFLICT (product_code) DO NOTHING;
+
+├── docs/```
+
+│   ├── database_schema.png          # ERD diagram
+
+│   └── TABLES.pgerd                 # pgAdmin ERD file- **Orders**
+
+│
+
+├── data/```sql
+
+│   └── (place your CSV data here)INSERT INTO orders (InvoiceNo, date, CustomerID, product_code, Quantity, UnitPrice)
+
+│SELECT invoice, date, CustomerID, product_code, Quantity, UnitPrice
+
+├── README.md                        # This fileFROM e_comerce
+
+├── START_HERE.md                    # Quick start guideON CONFLICT (InvoiceNo) DO NOTHING;
+
+└── LICENSE                          # MIT License```
+
 ```
 
 ### Foreign Key Constraints
 
-```sql
-ALTER TABLE orders
-    ADD CONSTRAINT fk_customer FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID),
-    ADD CONSTRAINT fk_product FOREIGN KEY (product_code) REFERENCES products(product_code);
+---
 
-ALTER TABLE e_comerce
-    ADD CONSTRAINT fk_invoices FOREIGN KEY (invoice) REFERENCES orders(InvoiceNo),
-    ADD CONSTRAINT fk_stockcode FOREIGN KEY (product_code) REFERENCES products(product_code),
-    ADD CONSTRAINT fk_customerid FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID);
+```sql
+
+## 🔍 SQL QueriesALTER TABLE orders
+
+    ADD CONSTRAINT fk_customer FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID),
+
+### Schema Setup (`01_schema_setup.sql`)    ADD CONSTRAINT fk_product FOREIGN KEY (product_code) REFERENCES products(product_code);
+
+1. Create raw data table
+
+2. Clean & transform data (split datetime, rename columns)ALTER TABLE e_comerce
+
+3. Create normalized tables (customers, products, orders)    ADD CONSTRAINT fk_invoices FOREIGN KEY (invoice) REFERENCES orders(InvoiceNo),
+
+4. Insert data with deduplication    ADD CONSTRAINT fk_stockcode FOREIGN KEY (product_code) REFERENCES products(product_code),
+
+5. Add foreign key constraints    ADD CONSTRAINT fk_customerid FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID);
+
 ```
+
+### Business Analysis (`02_business_analysis.sql`)
 
 ---
 
-## SQL Analytics
+| Query | Business Question | SQL Techniques |
 
-### High-Level Business Metrics
+|-------|------------------|----------------|## SQL Analytics
 
-- **Total number of customers**
+| 1. Business Overview | What are our key metrics? | Aggregations, COUNT DISTINCT |
+
+| 2. Customer Activity | How many orders per customer? | GROUP BY, CASE WHEN |### High-Level Business Metrics
+
+| 3. High-Value Customers | Who spends the most? | ORDER BY, LIMIT |
+
+| 4. New vs Returning | Are we retaining customers? | CTEs, CASE expressions |- **Total number of customers**
+
+| 5. Top Orders | Which orders made the most? | SUM, GROUP BY |    ```sql
+
+| 6. Customer Lifetime Value | Who are our best customers? | Aggregations, calculations |    SELECT COUNT(DISTINCT customerid) FROM customers;
+
+| 7. Monthly Revenue Trends | How is revenue changing? | LAG window function |    ```
+
+| 8. Best Selling Products | What's #1 each month? | RANK, PARTITION BY |
+
+| 9. Churned Customers | Who hasn't ordered in 90 days? | DATE arithmetic, intervals |- **Total number of orders**
+
+| 10. Product Rankings | How do products rank monthly? | RANK over windows |    ```sql
+
+| 11. Cumulative Revenue | What's our running total? | SUM window function |    SELECT COUNT(DISTINCT invoiceno) FROM orders;
+
+| 12. Cohort Analysis | Which cohort is most valuable? | DATE_TRUNC, GROUP BY |    ```
+
+
+
+---- **Total revenue**
+
     ```sql
-    SELECT COUNT(DISTINCT customerid) FROM customers;
+
+## 💡 Business Insights    SELECT ROUND(SUM(quantity * unitprice)) AS total_revenue FROM orders;
+
     ```
 
-- **Total number of orders**
-    ```sql
-    SELECT COUNT(DISTINCT invoiceno) FROM orders;
-    ```
+### Key Metrics
 
-- **Total revenue**
-    ```sql
-    SELECT ROUND(SUM(quantity * unitprice)) AS total_revenue FROM orders;
-    ```
+- 📊 **4,372 unique customers**- **Average order value**
 
-- **Average order value**
-    ```sql
-    SELECT ROUND(AVG(quantity * unitprice)) AS average_order_value FROM orders;
-    ```
+- 📦 **25,900 total orders**    ```sql
 
-### Customer Behavior Analysis
+- 💰 **$590,571 total revenue**    SELECT ROUND(AVG(quantity * unitprice)) AS average_order_value FROM orders;
 
-- **Orders per customer**
-    ```sql
+- 💵 **$23 average order value**    ```
+
+
+
+### Customer Segments### Customer Behavior Analysis
+
+- **VIP Customers**: 10+ orders (top revenue contributors)
+
+- **Regular Customers**: 5-9 orders (steady business)- **Orders per customer**
+
+- **Occasional Customers**: 1-4 orders (growth opportunity)    ```sql
+
     SELECT customerid, COUNT(invoiceno) AS orders
-    FROM orders
-    WHERE customerid IS NOT NULL
-    GROUP BY customerid;
-    ```
+
+### Analysis Highlights    FROM orders
+
+- Monthly revenue trends show seasonality patterns    WHERE customerid IS NOT NULL
+
+- Top 10 customers contribute significant revenue share    GROUP BY customerid;
+
+- Customer churn analysis identifies at-risk accounts    ```
+
+- Cohort analysis reveals customer acquisition trends
 
 - **Customers who bought more than 5 times**
-    ```sql
+
+---    ```sql
+
     SELECT customerid, COUNT(invoiceno) AS orders, ROUND(SUM(quantity)) AS amount
-    FROM orders
+
+## 🛠️ Technologies Used    FROM orders
+
     WHERE customerid IS NOT NULL
-    GROUP BY customerid
-    HAVING SUM(quantity) > 5;
-    ```
 
-- **New vs Returning customers per month**
-    ```sql
-    WITH first_purchase AS (
-        SELECT customerid, MIN(date) AS first_purchase
-        FROM orders
+- **Database**: PostgreSQL    GROUP BY customerid
+
+- **SQL Techniques**:    HAVING SUM(quantity) > 5;
+
+  - Common Table Expressions (CTEs)    ```
+
+  - Window Functions (RANK, LAG, SUM OVER)
+
+  - Date/Time Functions (DATE_TRUNC, intervals)- **New vs Returning customers per month**
+
+  - Joins (INNER, LEFT)    ```sql
+
+  - Aggregations (SUM, AVG, COUNT)    WITH first_purchase AS (
+
+  - Subqueries        SELECT customerid, MIN(date) AS first_purchase
+
+- **Tools**: pgAdmin 4, DBeaver, or any PostgreSQL client        FROM orders
+
         GROUP BY customerid
-    )
+
+---    )
+
     SELECT 
-        DATE_TRUNC('month', o.date) AS month,
+
+## 🚀 Getting Started        DATE_TRUNC('month', o.date) AS month,
+
         COUNT(CASE WHEN o.date = f.first_purchase THEN 1 END) AS new_customers,
-        COUNT(CASE WHEN o.date > f.first_purchase THEN 1 END) AS returning_customers
-    FROM orders o
-    JOIN first_purchase f ON o.customerid = f.customerid
-    GROUP BY DATE_TRUNC('month', o.date)
+
+### Prerequisites        COUNT(CASE WHEN o.date > f.first_purchase THEN 1 END) AS returning_customers
+
+- PostgreSQL 12+ installed    FROM orders o
+
+- pgAdmin or any SQL client    JOIN first_purchase f ON o.customerid = f.customerid
+
+- Basic SQL knowledge    GROUP BY DATE_TRUNC('month', o.date)
+
     ORDER BY month;
-    ```
 
-### Revenue & Product Analysis
+### Setup Instructions    ```
 
-- **Top 10 products by revenue**
-    ```sql
-    SELECT product_code, ROUND(SUM(quantity * unitprice)) AS revenue
+
+
+1. **Clone this repository**### Revenue & Product Analysis
+
+   ```bash
+
+   git clone https://github.com/Ahmed-Gohar1/e_commerce_analysis.git- **Top 10 products by revenue**
+
+   cd e_commerce_analysis    ```sql
+
+   ```    SELECT product_code, ROUND(SUM(quantity * unitprice)) AS revenue
+
     FROM orders
-    GROUP BY product_code
-    ORDER BY revenue DESC
-    LIMIT 10;
-    ```
 
-- **Top 10 customers by total spending**
-    ```sql
-    SELECT customerid, ROUND(SUM(quantity * unitprice)) AS revenue
-    FROM orders
+2. **Create database**    GROUP BY product_code
+
+   ```sql    ORDER BY revenue DESC
+
+   CREATE DATABASE ecommerce_db;    LIMIT 10;
+
+   ```    ```
+
+
+
+3. **Run schema setup**- **Top 10 customers by total spending**
+
+   ```bash    ```sql
+
+   psql -d ecommerce_db -f sql/01_schema_setup.sql    SELECT customerid, ROUND(SUM(quantity * unitprice)) AS revenue
+
+   ```    FROM orders
+
     GROUP BY customerid
-    ORDER BY revenue DESC
-    LIMIT 10;
-    ```
+
+4. **Import your data** (if you have CSV files)    ORDER BY revenue DESC
+
+   ```sql    LIMIT 10;
+
+   COPY e_comerce FROM '/path/to/data.csv' CSV HEADER;    ```
+
+   ```
 
 - **Monthly revenue trends (top product per month)**
-    ```sql
-    WITH ord AS (
-        SELECT 
-            DATE_TRUNC('month', o.date) AS month, 
+
+5. **Run business analysis queries**    ```sql
+
+   ```bash    WITH ord AS (
+
+   psql -d ecommerce_db -f sql/02_business_analysis.sql        SELECT 
+
+   ```            DATE_TRUNC('month', o.date) AS month, 
+
             o.product_code,
-            ROUND(SUM(o.quantity * o.unitprice)) AS revenue,
+
+For detailed instructions, see [START_HERE.md](START_HERE.md)            ROUND(SUM(o.quantity * o.unitprice)) AS revenue,
+
             RANK() OVER(PARTITION BY DATE_TRUNC('month', o.date) ORDER BY ROUND(SUM(o.quantity * o.unitprice)) DESC) AS rank
-        FROM orders o
+
+---        FROM orders o
+
         GROUP BY DATE_TRUNC('month', o.date), o.product_code
-    )
+
+## 📚 Key Learnings    )
+
     SELECT 
-        o.month,
+
+This project demonstrates:        o.month,
+
         p.description, 
-        o.product_code,
-        o.revenue, 
-        o.rank
-    FROM ord o
+
+### Database Design        o.product_code,
+
+- How to normalize a denormalized table into 3NF        o.revenue, 
+
+- Proper use of primary keys and foreign keys        o.rank
+
+- Data integrity through constraints    FROM ord o
+
     LEFT JOIN products p ON p.product_code = o.product_code
-    WHERE o.rank = 1
-    ORDER BY o.month, o.rank;
-    ```
 
-### Churn & Cohort Analysis
+### SQL Skills    WHERE o.rank = 1
 
-- **Customers who haven’t ordered in the last 90 days (churned)**
-    ```sql
-    WITH last_orders AS (
-        SELECT customerid, MAX(date) AS last_purchase
-        FROM orders
+- Writing clean, readable queries with CTEs    ORDER BY o.month, o.rank;
+
+- Using window functions for rankings and running totals    ```
+
+- Performing cohort and trend analysis
+
+- Date/time manipulation for business metrics### Churn & Cohort Analysis
+
+
+
+### Business Analysis- **Customers who haven’t ordered in the last 90 days (churned)**
+
+- Calculating key performance indicators (KPIs)    ```sql
+
+- Customer segmentation strategies    WITH last_orders AS (
+
+- Revenue trend analysis        SELECT customerid, MAX(date) AS last_purchase
+
+- Churn prediction and retention metrics        FROM orders
+
         GROUP BY customerid
-    )
+
+---    )
+
     SELECT c.customerid, l.last_purchase
-    FROM customers c
+
+## 👨‍💻 Author    FROM customers c
+
     LEFT JOIN last_orders l ON c.customerid = l.customerid
-    WHERE l.last_purchase IS NULL          
+
+**Ahmed Gohar**    WHERE l.last_purchase IS NULL          
+
        OR l.last_purchase <= DATE '2011-12-09' - INTERVAL '90 days';
-    ```
+
+- GitHub: [@Ahmed-Gohar1](https://github.com/Ahmed-Gohar1)    ```
+
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/ahmed-gohar1)
 
 - **Cohort analysis (group by signup month)**
-    ```sql
+
+---    ```sql
+
     SELECT 
-        customerid,
+
+## 📄 License        customerid,
+
         DATE_TRUNC('month', date) AS cohort_month
-    FROM customers;
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.    FROM customers;
+
     ```
+
+---
 
 ### Advanced SQL Techniques
 
+## 🌟 Acknowledgments
+
 - **Rank products by revenue each month**
-    ```sql
-    WITH monthly_revenue AS (
-        SELECT 
+
+- Dataset inspired by real-world e-commerce transaction data    ```sql
+
+- ERD created with pgAdmin 4    WITH monthly_revenue AS (
+
+- Project structure follows industry best practices        SELECT 
+
             DATE_TRUNC('month', o.date) AS month,
-            p.product_code,
+
+---            p.product_code,
+
             p.description,
-            SUM(o.quantity * o.unitprice) AS revenue
+
+**⭐ If you find this project helpful, please give it a star!**            SUM(o.quantity * o.unitprice) AS revenue
+
         FROM orders o
         JOIN products p ON o.product_code = p.product_code
         GROUP BY DATE_TRUNC('month', o.date), p.product_code, p.description
