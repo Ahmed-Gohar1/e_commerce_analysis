@@ -1,4 +1,4 @@
-# E-Commerce Sales Analysis!
+# 🛒 E-Commerce SQL Analysis# E-Commerce Sales Analysis!
 
 
 
@@ -6,95 +6,193 @@
 
 
 
-**A beginner-friendly SQL project demonstrating database design, data normalization, and business intelligence using real e-commerce data.**![Database ERD](docs/database_schema.png)# e_comerce_analysis – Database & SQL Analytics
+**Learn SQL by answering 20 business questions about online shopping data.**![Database ERD](docs/database_schema.png)
 
 
 
-Perfect for portfolios, interviews, and learning advanced SQL with CTEs!
+Simple queries. Easy to understand. Perfect for portfolios.
 
 
+
+---**A beginner-friendly SQL project demonstrating database design, data normalization, and business intelligence using real e-commerce data.**![Database ERD](docs/database_schema.png)# e_comerce_analysis – Database & SQL Analytics
+
+
+
+## What You Get
+
+
+
+- ✅ **20 SQL queries** - Each answers a business questionPerfect for portfolios, interviews, and learning advanced SQL with CTEs!
+
+- ✅ **All use CTEs** - Clean, modern SQL style
+
+- ✅ **Beginner-friendly** - Simple explanations
+
+- ✅ **Ready to use** - Just run and learn
 
 ---A comprehensive SQL-based e-commerce analytics project demonstrating **database design, data normalization, and business intelligence** using real-world transaction data.## Overview
 
+---
 
+
+
+## Quick Start
 
 ## 📋 Table of Contents
 
+1. Create database: `CREATE DATABASE ecommerce_db;`
 
+2. Run `sql/01_schema_setup.sql` (creates tables)
+
+3. Run queries from `sql/02_business_analysis.sql`
 
 - [Overview](#overview)---This project demonstrates the process of **cleaning, normalizing, and analyzing e-commerce sales data** using SQL. It starts from a raw table (`e_comerce`), transforms and splits columns, normalizes the schema into analytical tables (`customers`, `products`, `orders`), and finally provides a set of advanced SQL queries to extract business insights.
 
+📖 **Detailed guide:** [START_HERE.md](START_HERE.md)
+
 - [Key Features](#key-features)
+
+---
 
 - [Database Schema](#database-schema)
 
+## The 20 Questions
+
 - [Project Structure](#project-structure)
 
-- [SQL Query Catalog](#sql-query-catalog)## 📋 Table of Contents---
+**Easy (1-6):**
 
-- [Business Insights](#business-insights)
+- How many customers? Orders per customer? Who spends most?- [SQL Query Catalog](#sql-query-catalog)## 📋 Table of Contents---
+
+
+
+**Medium (7-12):**- [Business Insights](#business-insights)
+
+- Revenue growth? Top products? Churned customers?
 
 - [Technologies Used](#technologies-used)
 
-- [Getting Started](#getting-started)
+**Advanced (13-20):**
 
-- [SQL Skills Demonstrated](#sql-skills-demonstrated)- [Overview](#overview)## Table of Contents
-
-- [Author](#author)
-
-- [License](#license)- [Key Features](#key-features)
+- Purchase frequency? Product combos? VIP customers? Seasonal trends?- [Getting Started](#getting-started)
 
 
 
----- [Database Schema](#database-schema)- [Schema Design & Normalization](#schema-design--normalization)
+---- [SQL Skills Demonstrated](#sql-skills-demonstrated)- [Overview](#overview)## Table of Contents
 
 
 
-## 🎯 Overview- [Project Structure](#project-structure)  - [Original Table Creation](#original-table-creation)
+## Files- [Author](#author)
 
 
 
-This project showcases a complete e-commerce analytics pipeline:- [SQL Queries](#sql-queries)  - [Cleaning & Transformation](#cleaning--transformation)
+```- [License](#license)- [Key Features](#key-features)
+
+sql/
+
+├── 01_schema_setup.sql       # Creates tables
+
+└── 02_business_analysis.sql  # 20 queries
+
+```---- [Database Schema](#database-schema)- [Schema Design & Normalization](#schema-design--normalization)
 
 
+
+**Database:** 3 tables (Customers, Products, Orders)
+
+
+
+---## 🎯 Overview- [Project Structure](#project-structure)  - [Original Table Creation](#original-table-creation)
+
+
+
+## What You Learn
+
+
+
+- Basic SQL: SELECT, JOIN, GROUP BYThis project showcases a complete e-commerce analytics pipeline:- [SQL Queries](#sql-queries)  - [Cleaning & Transformation](#cleaning--transformation)
+
+- CTEs: WITH clauses
+
+- Window Functions: RANK, LAG
+
+- Business metrics: Revenue, customers, trends
 
 1. **📥 Data Cleaning** - Transform raw transaction data into clean format- [Business Insights](#business-insights)  - [Entity Identification & Normalization](#entity-identification--normalization)
 
+---
+
 2. **🗄️ Database Design** - Normalize schema into 3NF (Third Normal Form)
+
+## Results Preview
 
 3. **📊 Business Intelligence** - Extract insights with 20 beginner-friendly SQL queries- [Technologies Used](#technologies-used)  - [Data Insertion](#data-insertion)
 
+- 📊 4,372 customers
 
+- 📦 25,900 orders  
+
+- 💰 $590K revenue
 
 **Why This Project?**- [Getting Started](#getting-started)  - [Foreign Key Constraints](#foreign-key-constraints)
 
+---
+
 - ✅ **Interview-Ready**: All queries use CTEs and answer real business questions
+
+## Perfect For
 
 - ✅ **Beginner-Friendly**: Simple logic, clear comments, easy to understand- [Key Learnings](#key-learnings)- [SQL Analytics](#sql-analytics)
 
-- ✅ **Portfolio-Perfect**: Professional structure and documentation
+- Learning SQL
 
-- ✅ **Real-World Data**: Based on actual e-commerce transaction patterns- [Author](#author)  - [High-Level Business Metrics](#high-level-business-metrics)
+- Job portfolios- ✅ **Portfolio-Perfect**: Professional structure and documentation
 
+- Interview prep
 
-
----- [License](#license)  - [Customer Behavior Analysis](#customer-behavior-analysis)
-
-
-
-## ⭐ Key Features  - [Revenue & Product Analysis](#revenue--product-analysis)
+- Practice CTEs- ✅ **Real-World Data**: Based on actual e-commerce transaction patterns- [Author](#author)  - [High-Level Business Metrics](#high-level-business-metrics)
 
 
 
-### 🗄️ Database Design---  - [Churn & Cohort Analysis](#churn--cohort-analysis)
+---
+
+
+
+## Tech---- [License](#license)  - [Customer Behavior Analysis](#customer-behavior-analysis)
+
+
+
+PostgreSQL + SQL
+
+
+
+---## ⭐ Key Features  - [Revenue & Product Analysis](#revenue--product-analysis)
+
+
+
+## Author
+
+
+
+**Ahmed Gohar**  ### 🗄️ Database Design---  - [Churn & Cohort Analysis](#churn--cohort-analysis)
+
+[@Ahmed-Gohar1](https://github.com/Ahmed-Gohar1)
 
 - **Normalized Schema**: 3 tables (customers, products, orders) following 3NF
 
-- **Data Integrity**: Foreign keys ensure valid relationships  - [Advanced SQL Techniques](#advanced-sql-techniques)
+More projects:
+
+- [Telco Churn](https://github.com/Ahmed-Gohar1/telco-churn-prediction)- **Data Integrity**: Foreign keys ensure valid relationships  - [Advanced SQL Techniques](#advanced-sql-techniques)
+
+- [BMW Sales](https://github.com/Ahmed-Gohar1/bmw-sales-analysis)
 
 - **Clean Architecture**: Separated concerns, no redundancy
 
+---
+
 ## 🎯 Overview- [Usage](#usage)
+
+**⭐ Star if helpful! • Check [START_HERE.md](START_HERE.md) to begin 🚀**
 
 ### 📊 SQL Analysis (20 Queries)
 
