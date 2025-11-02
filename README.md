@@ -1,4 +1,4 @@
-# 🛒 E-Commerce Sales Analysis# 🛒 E-Commerce Sales Analysis![Database ERD](tabels.png)
+# E-Commerce Sales Analysis!
 
 
 
